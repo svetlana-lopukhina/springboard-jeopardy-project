@@ -41,7 +41,8 @@ Category: The name given to the structure containing clues on the same topic.
       "id": <clue ID>,
       "answer": <answer to the question>,
       "question": <question>,
-      "value": <value of the question (be careful not all questions have values) (Hint: you can assign your own value such as 200 or skip)>,
+      "value": <value of the question (be careful not all questions have values) 
+      (Hint: you can assign your own value such as 200 or skip)>,
       ... more properties
     },
     ... more clues
@@ -51,7 +52,8 @@ Category: The name given to the structure containing clues on the same topic.
 
 const API_URL = "https://rithm-jeopardy.herokuapp.com/api/"; // The URL of the API.
 const NUMBER_OF_CATEGORIES = 6; // The number of categories you will be fetching. You can change this number.
-const NUMBER_OF_CLUES_PER_CATEGORY = 5; // The number of clues you will be displaying per category. You can change this number.
+const NUMBER_OF_CLUES_PER_CATEGORY = 5; // The number of clues you will be displaying per category. 
+// You can change this number.
 
 let categories = []; // The categories with clues fetched from the API.
 /*
@@ -74,14 +76,16 @@ let categories = []; // The categories with clues fetched from the API.
  */
 
 let activeClue = null; // Currently selected clue data.
-let activeClueMode = 0; // Controls the flow of #active-clue element while selecting a clue, displaying the question of selected clue, and displaying the answer to the question.
+let activeClueMode = 0; // Controls the flow of #active-clue element while selecting a clue, 
+// displaying the question of selected clue, and displaying the answer to the question.
 /*
 0: Empty. Waiting to be filled. If a clue is clicked, it shows the question (transits to 1).
 1: Showing a question. If the question is clicked, it shows the answer (transits to 2).
 2: Showing an answer. If the answer is clicked, it empties (transits back to 0).
  */
 
-let isPlayButtonClickable = true; // Only clickable when the game haven't started yet or ended. Prevents the button to be clicked during the game.
+let isPlayButtonClickable = true; // Only clickable when the game haven't started yet or ended. 
+// Prevents the button to be clicked during the game.
 
 $("#play").on("click", handleClickOfPlay);
 
@@ -130,7 +134,11 @@ async function setupTheGame ()
 async function getCategoryIds ()
 {
   const ids = []; // todo set after fetching
-
+  const res = await axios.get(`${API_URL}categories?count=100`);// fatch 100 categories from API
+  const categories = res.data;//Store categories returned by API
+  for (const category of categories) {
+    ids.push(category.id);
+  }
   // todo fetch NUMBER_OF_CATEGORIES amount of categories
 
   return ids;
@@ -175,13 +183,16 @@ async function getCategoryData (categoryId)
  * Fills the HTML table using category data.
  *
  * Hints:
- * - You need to call this function using an array of categories where each element comes from the `getCategoryData` function.
+ * - You need to call this function using an array of categories where each element comes from the 
+ * `getCategoryData` function.
  * - Table head (thead) has a row (#categories).
  *   For each category, you should create a cell element (th) and append that to it.
  * - Table body (tbody) has a row (#clues).
  *   For each category, you should create a cell element (td) and append that to it.
- *   Besides, for each clue in a category, you should create a row element (tr) and append it to the corresponding previously created and appended cell element (td).
- * - To this row elements (tr) should add an event listener (handled by the `handleClickOfClue` function) and set their IDs with category and clue IDs. This will enable you to detect which clue is clicked.
+ *   Besides, for each clue in a category, you should create a row element (tr) and append it to 
+ * the corresponding previously created and appended cell element (td).
+ * - To this row elements (tr) should add an event listener (handled by the `handleClickOfClue` function)
+ *  and set their IDs with category and clue IDs. This will enable you to detect which clue is clicked.
  */
 function fillTable (categories)
 {
@@ -197,7 +208,8 @@ $(".clue").on("click", handleClickOfClue);
  * Hints:
  * - Control the behavior using the `activeClueMode` variable.
  * - Identify the category and clue IDs using the clicked element's ID.
- * - Remove the clicked clue from categories since each clue should be clickable only once. Don't forget to remove the category if all the clues are removed.
+ * - Remove the clicked clue from categories since each clue should be clickable only once. 
+ * Don't forget to remove the category if all the clues are removed.
  * - Don't forget to update the `activeClueMode` variable.
  *
  */
