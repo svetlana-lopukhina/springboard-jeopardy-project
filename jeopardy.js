@@ -98,7 +98,9 @@ $("#play").on("click", handleClickOfPlay);
  */
 function handleClickOfPlay ()
 {
-  // todo set the game up if the play button is clickable
+ if (isPlayButtonClickable) {
+  setupTheGame();
+ } // todo set the game up if the play button is clickable
 }
 
 /**
@@ -119,6 +121,8 @@ async function setupTheGame ()
   // todo reset the DOM (table, button text, the end text)
 
   // todo fetch the game data (categories with clues)
+  const categoryIds = await getCategoryIds();
+  console.log(categoryIds);
 
   // todo fill the table
 }
@@ -133,15 +137,16 @@ async function setupTheGame ()
  */
 async function getCategoryIds ()
 {
-  const ids = []; // todo set after fetching
+  const ids = []; // to do set after fetching
   const res = await axios.get(`${API_URL}categories?count=100`);// fatch 100 categories from API
   const categories = res.data;//Store categories returned by API
+  // save category IDs
   for (const category of categories) {
     ids.push(category.id);
   }
   // todo fetch NUMBER_OF_CATEGORIES amount of categories
-
-  return ids;
+const randomIds = _.sampleSize(ids, NUMBER_OF_CATEGORIES);
+  return randomIds;
 }
 
 /**
