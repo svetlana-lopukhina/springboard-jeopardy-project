@@ -216,7 +216,26 @@ categoryWithClues.clues = _.sampleSize(
  */
 function fillTable (categories)
 {
-  // todo
+  // clear old board
+  $('#categories').empty();
+  $('#clues').empty();
+  // create category headers
+  for (const category of categories) {
+    const th = $('<th>').text(category.title);
+    $('#categories').append(th);
+  }
+  // create clue rows
+  for (let i = 0; i < NUMBER_OF_CLUES_PER_CATEGORY; i++) {
+    const tr = $('<tr>');
+    for (const category of categories) {
+      const clue = category.clues[i];
+      const td = $('<td>')
+      .text(clue.value)
+      .addClass('clue');
+      tr.append(td);
+    }
+    $('#clues').append(tr);
+  }
 }
 
 $(".clue").on("click", handleClickOfClue);
