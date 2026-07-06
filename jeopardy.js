@@ -122,9 +122,17 @@ async function setupTheGame ()
 
   // todo fetch the game data (categories with clues)
   const categoryIds = await getCategoryIds();
-  console.log(categoryIds);
+  categories = [];// clear previous 
+  // fetch each category
+  for (const id of categoryIds) {
+    const category = await getCategoryData(id);
+    categories.push(category);
+  }
 
-  // todo fill the table
+  //console.log(categoryIds);
+
+  fillTable(categories);
+  // Fill game board
 }
 
 /**
