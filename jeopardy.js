@@ -238,9 +238,9 @@ function fillTable (categories)
     }
     $('#clues').append(tr);
   }
-}
 
-$(".clue").on("click", handleClickOfClue);
+
+$(".clue").on("click", handleClickOfClue);}
 
 /**
  * Manages the behavior when a clue is clicked.
@@ -257,6 +257,19 @@ $(".clue").on("click", handleClickOfClue);
 function handleClickOfClue (event)
 {
   // todo find and remove the clue from the categories
+  // get ids
+  const [categoryId, clueId] = event.target.id.split('-'); 
+  // find category
+  const category = categories.find(c => c.id == categoryId);
+  // find clue
+const clue = category.clues.find(c => c.id == clueId);
+// save active clue
+activeClue = clue;
+//show question
+$('#active-clue').html(activeClue.question);
+activeClueMode = 1;
+//mark clue viewed
+$(event.target).addClass('viewed').text('');
 
   // todo mark clue as viewed (you can use the class in style.css), display the question at #active-clue
 }
