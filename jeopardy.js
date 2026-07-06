@@ -180,7 +180,14 @@ async function getCategoryData (categoryId)
   };
 
   // todo fetch the category with NUMBER_OF_CLUES_PER_CATEGORY amount of clues
-
+const res = await axios.get(`${API_URL}category?id=${categoryId}`);// fetch category data
+const category = res.data;
+categoryWithClues.title = category.title;//save title
+// pick random clues
+categoryWithClues.clues = _.sampleSize(
+  category.clues,
+  NUMBER_OF_CLUES_PER_CATEGORY
+);
   return categoryWithClues;
 }
 
