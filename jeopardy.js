@@ -301,6 +301,7 @@ function handleClickOfActiveClue (event)
   else if (activeClueMode === 2)
   {
     activeClueMode = 0;
+    activeClue = null;
     $("#active-clue").html(null);
 
     if (categories.length === 0)
