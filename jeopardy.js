@@ -229,9 +229,11 @@ function fillTable (categories)
     const tr = $('<tr>');
     for (const category of categories) {
       const clue = category.clues[i];
+
       const td = $('<td>')
       .text(clue.value)
-      .addClass('clue');
+      .addClass('clue')
+      .attr('id', `${category.id}-${clue.id}`);
       tr.append(td);
     }
     $('#clues').append(tr);
