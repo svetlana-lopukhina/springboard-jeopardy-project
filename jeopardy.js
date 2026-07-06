@@ -275,7 +275,7 @@ activeClue = clue;
 $('#active-clue').html(activeClue.question);
 activeClueMode = 1;
 //mark clue viewed
-$(event.target).addClass('viewed').text('');
+$(event.target).removeClass('clue').addClass('viewed').text('');
 
   // todo mark clue as viewed (you can use the class in style.css), display the question at #active-clue
 }
