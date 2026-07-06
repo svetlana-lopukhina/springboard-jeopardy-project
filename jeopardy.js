@@ -265,6 +265,12 @@ function handleClickOfClue (event)
 const clue = category.clues.find(c => c.id == clueId);
 // save active clue
 activeClue = clue;
+//remove used clue
+    category.clues = category.clues.filter(c => c.id !=clueId);
+    // remove empty category
+    if (category.clues.length === 0) {
+      categories = categories.filter(c => c.id != categoryId);
+    }
 //show question
 $('#active-clue').html(activeClue.question);
 activeClueMode = 1;
@@ -302,6 +308,7 @@ function handleClickOfActiveClue (event)
   {
     activeClueMode = 0;
     activeClue = null;
+    
     $("#active-clue").html(null);
 
     if (categories.length === 0)
