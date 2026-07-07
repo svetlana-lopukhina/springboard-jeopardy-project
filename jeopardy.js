@@ -116,8 +116,14 @@ function handleClickOfPlay ()
  */
 async function setupTheGame ()
 {
+  // clear active clue text
+  $('#active-clue').html('');
+  // reset page for new game
+  $('#play').text('Loading...');
+  $('#categories').empty();
+  $('#clues').empty();
   // todo show the spinner while setting up the game
-
+$('#spinner').removeClass('disabled');
   // todo reset the DOM (table, button text, the end text)
 
   // todo fetch the game data (categories with clues)
@@ -132,6 +138,8 @@ async function setupTheGame ()
   //console.log(categoryIds);
 
   fillTable(categories);
+  $('#spinner').addClass('disabled');
+  $('#play').text('Restart the Game!');
   // Fill game board
 }
 
@@ -231,7 +239,7 @@ function fillTable (categories)
       const clue = category.clues[i];
 
       const td = $('<td>')
-      .text(clue.value)
+      .text(clue.value || ((i + 1) * 100)) // if API doesnt provide a clue value, use th row value 100, 200,300
       .addClass('clue')
       .attr('id', `${category.id}-${clue.id}`);
       tr.append(td);
