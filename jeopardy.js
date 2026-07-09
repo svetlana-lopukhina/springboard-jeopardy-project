@@ -226,26 +226,30 @@ function fillTable (categories)
 {
   // clear old board
   $('#categories').empty();
+
   $('#clues').empty();
   // create category headers
   for (const category of categories) {
     const th = $('<th>').text(category.title);
     $('#categories').append(th);
   }
-  // create clue rows
-  for (let i = 0; i < NUMBER_OF_CLUES_PER_CATEGORY; i++) {
-    const tr = $('<tr>');
-    for (const category of categories) {
-      const clue = category.clues[i];
+ // create clue columns
+for (const category of categories) {
+const td = $("<td>");
 
-      const td = $('<td>')
-      .text(clue.value || ((i + 1) * 100)) // if API doesnt provide a clue value, use th row value 100, 200,300
-      .addClass('clue')
-      .attr('id', `${category.id}-${clue.id}`);
-      tr.append(td);
-    }
-    $('#clues').append(tr);
-  }
+for (let i = 0; i < NUMBER_OF_CLUES_PER_CATEGORY; i++) {
+const clue = category.clues[i];
+
+const clueRow = $("<div>")
+.text(clue.value || ((i + 1) * 100)) // If API doesn't provide a value, use row value.
+.addClass("clue")
+.attr("id", `${category.id}-${clue.id}`);
+
+td.append(clueRow);
+}
+
+$("#clues").append(td);
+}
 
 
 $(".clue").on("click", handleClickOfClue);}
